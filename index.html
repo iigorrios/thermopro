@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thermo Pro – Queima de Gordura com Controle Glicêmico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow: #F5C800;
+  --yellow-light: #FFE033;
+  --black: #0A0A0A;
+  --black2: #111111;
+  --black3: #181818;
+  --black4: #202020;
+  --text: #F0EDE8;
+  --muted: #888880;
+  --border: rgba(245,200,0,0.1);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes flicker { 0%,100%{opacity:1} 48%{opacity:.9} 50%{opacity:.6} 52%{opacity:.9} }
+@keyframes rise { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse-glow { 0%,100%{box-shadow:0 0 24px rgba(245,200,0,.3)} 50%{box-shadow:0 0 52px rgba(245,200,0,.65)} }
+@keyframes burn { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(245,200,0,.12);
+  padding: 12px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 4px; color: var(--yellow);
+  animation: flicker 5s infinite;
+  text-shadow: 0 0 18px rgba(245,200,0,.35);
+}
+.nav-cta {
+  background: var(--yellow); color: #000;
+  font-weight: 800; font-size: 12px;
+  padding: 9px 18px; border-radius: 6px;
+  text-decoration: none; letter-spacing: .5px;
+  transition: background .2s, transform .15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--yellow-light); transform: translateY(-1px); }
+
+/* ── TICKER ── */
+.ticker-wrap { background: var(--yellow); padding: 9px 0; overflow: hidden; white-space: nowrap; }
+.ticker-inner { display: inline-block; animation: ticker 26s linear infinite; }
+.ticker-inner span {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 0 28px; color: #000;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; min-height: 100svh;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 70% at 70% 50%, rgba(245,200,0,.07) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 5% 90%, rgba(245,200,0,.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(245,200,0,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,0,.022) 1px, transparent 1px);
+  background-size: 56px 56px; pointer-events: none;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 80px 48px 80px 48px;
+  animation: rise .9s ease both;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(245,200,0,.1);
+  border: 1px solid rgba(245,200,0,.3);
+  color: var(--yellow);
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 6vw, 86px);
+  line-height: .95; letter-spacing: 2px; margin-bottom: 22px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--yellow), #fff, var(--yellow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; background-size: 200% auto;
+  animation: burn 3s linear infinite;
+}
+.hero-sub {
+  font-size: clamp(14px, 1.4vw, 17px);
+  color: rgba(240,237,232,.7); max-width: 440px;
+  margin-bottom: 34px; line-height: 1.75;
+}
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-block;
+  background: var(--yellow); color: #000;
+  font-weight: 800; font-size: 14px;
+  padding: 15px 30px; border-radius: 8px;
+  text-decoration: none; letter-spacing: .5px;
+  animation: pulse-glow 2.5s ease-in-out infinite;
+  transition: transform .15s, background .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); background: var(--yellow-light); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--muted); font-size: 13px; font-weight: 600;
+  text-decoration: none; border: 1px solid rgba(245,200,0,.2);
+  padding: 15px 20px; border-radius: 8px;
+  transition: color .2s, border-color .2s;
+}
+.btn-ghost:hover { color: var(--yellow); border-color: rgba(245,200,0,.5); }
+.btn-ghost svg { width: 17px; height: 17px; fill: #25D366; flex-shrink: 0; }
+.hero-trust {
+  margin-top: 30px; display: flex;
+  align-items: center; gap: 18px; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--muted); font-weight: 700;
+  letter-spacing: .3px;
+}
+.trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+
+/* ── HERO VISUAL ── */
+.hero-visual {
+  position: relative; z-index: 2;
+  height: 100%; min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 60px 32px;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(245,200,0,.11) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-product-img {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 380px;
+  filter: drop-shadow(0 20px 56px rgba(245,200,0,.28));
+  animation: float 5s ease-in-out infinite;
+}
+
+/* ── SECTION ── */
+section { position: relative; z-index: 1; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.section-pad { padding: 80px 0; }
+.section-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(34px, 5vw, 56px);
+  letter-spacing: 1.5px; line-height: 1.05; margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 16px; color: rgba(240,237,232,.62);
+  max-width: 540px; line-height: 1.7;
+}
+
+/* ── SPLIT SECTIONS ── */
+.split-section {
+  position: relative; overflow: hidden;
+  min-height: 520px; display: flex; align-items: center;
+}
+.split-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  filter: brightness(.28) saturate(.6);
+}
+.split-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg,
+    rgba(10,10,10,.98) 0%,
+    rgba(10,10,10,.88) 45%,
+    rgba(10,10,10,.35) 75%,
+    rgba(10,10,10,.1) 100%);
+}
+.split-overlay-right {
+  background: linear-gradient(270deg,
+    rgba(10,10,10,.98) 0%,
+    rgba(10,10,10,.88) 45%,
+    rgba(10,10,10,.35) 75%,
+    rgba(10,10,10,.1) 100%);
+}
+.split-content {
+  position: relative; z-index: 2;
+  max-width: 1080px; margin: 0 auto;
+  padding: 64px 20px; width: 100%;
+}
+.split-content.right { text-align: right; }
+.split-content.right .section-sub { margin-left: auto; }
+.split-tag {
+  display: inline-block;
+  background: var(--yellow); color: #000;
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; padding: 5px 12px; border-radius: 4px;
+  margin-bottom: 18px;
+}
+.split-content h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 5.5vw, 70px);
+  letter-spacing: 2px; line-height: .95; margin-bottom: 18px;
+}
+.split-content h2 span { color: var(--yellow); }
+.split-content p {
+  font-size: 16px; color: rgba(240,237,232,.7);
+  max-width: 460px; line-height: 1.7; margin-bottom: 28px;
+}
+.split-content.right p { margin-left: auto; }
+
+/* ── PROBLEM ── */
+.problem { background: var(--black2); }
+.problem-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; margin-top: 48px; border-radius: 12px; overflow: hidden;
+}
+.problem-item {
+  background: var(--black3);
+  padding: 28px 24px; display: flex; gap: 14px; align-items: flex-start;
+  border-left: 3px solid transparent;
+  transition: background .2s, border-color .2s;
+}
+.problem-item:hover { background: var(--black4); border-left-color: var(--yellow); }
+.problem-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.problem-item h3 { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
+.problem-item p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── HOW ── */
+.how { background: var(--black); }
+.how-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px; margin-top: 48px;
+}
+.how-card {
+  background: var(--black3); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 20px;
+  position: relative; overflow: hidden;
+  transition: border-color .25s, transform .25s;
+}
+.how-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--yellow);
+}
+.how-card:hover { border-color: rgba(245,200,0,.4); transform: translateY(-4px); }
+.how-number {
+  font-family: 'Bebas Neue', sans-serif; font-size: 60px;
+  line-height: 1; color: rgba(245,200,0,.06);
+  position: absolute; top: 12px; right: 14px;
+}
+.how-ing {
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--yellow); margin-bottom: 8px;
+}
+.how-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.how-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* ── BENEFITS ── */
+.benefits { background: var(--black2); }
+.benefits-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center; margin-top: 48px;
+}
+.benefit-list { display: flex; flex-direction: column; gap: 12px; }
+.benefit-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 18px; background: var(--black3);
+  border-radius: 10px; border-left: 3px solid var(--yellow);
+  transition: background .2s;
+}
+.benefit-item:hover { background: var(--black4); }
+.benefit-icon { font-size: 18px; flex-shrink: 0; }
+.benefit-item h4 { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+.benefit-item p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.benefits-visual {
+  background: var(--black3); border: 1px solid var(--border);
+  border-radius: 16px; padding: 36px 24px; text-align: center;
+}
+.big-stat {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px; line-height: 1; letter-spacing: 2px;
+  color: var(--yellow);
+  text-shadow: 0 0 28px rgba(245,200,0,.3);
+  animation: float 4s ease-in-out infinite;
+}
+.big-stat-label { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.stat-divider { width: 36px; height: 2px; background: var(--yellow); margin: 20px auto; opacity: .3; }
+
+/* ── PRICING ── */
+.pricing { background: var(--black); }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-top: 48px;
+}
+.price-card {
+  background: var(--black3); border: 1px solid rgba(245,200,0,.1);
+  border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column;
+  position: relative; transition: transform .2s, border-color .2s;
+}
+.price-card:hover { transform: translateY(-5px); border-color: rgba(245,200,0,.35); }
+.price-card.featured { border-color: var(--yellow); }
+.featured-badge {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  background: var(--yellow); color: #000;
+  font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+  white-space: nowrap; z-index: 3;
+}
+.price-img-wrap {
+  background: #000;
+  padding: 24px 16px 14px;
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid rgba(245,200,0,.08);
+  min-height: 180px;
+}
+.price-img-wrap img {
+  width: 100%; max-height: 160px; object-fit: contain;
+}
+.price-img-wrap.featured-top { border-top: 3px solid var(--yellow); }
+.price-body {
+  padding: 18px 18px 20px;
+  display: flex; flex-direction: column; gap: 14px; flex: 1;
+}
+.price-potes {
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--yellow);
+}
+.price-card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 1px; line-height: 1.15;
+  margin-top: 2px;
+}
+.price-bonus {
+  font-size: 10px; color: var(--yellow); font-weight: 800;
+  background: rgba(245,200,0,.1); border: 1px solid rgba(245,200,0,.25);
+  padding: 3px 9px; border-radius: 5px; display: inline-block;
+  margin-top: 4px;
+}
+
+/* PREÇO */
+.price-block { display: flex; flex-direction: column; gap: 4px; }
+.price-installment {
+  font-size: 11px; color: var(--muted); font-weight: 600;
+}
+.price-installment strong {
+  color: var(--yellow); font-size: 13px; font-weight: 800;
+}
+.price-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px; letter-spacing: 1px; line-height: 1; color: var(--yellow);
+}
+.price-sight {
+  font-size: 11px; color: rgba(240,237,232,.4);
+  text-decoration: line-through; margin-top: -2px;
+}
+.price-note { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+.price-features { display: flex; flex-direction: column; gap: 7px; }
+.price-feat {
+  display: flex; gap: 8px; align-items: center;
+  font-size: 11px; color: rgba(240,237,232,.72);
+}
+.price-feat::before { content: '✓'; color: var(--yellow); font-weight: 800; flex-shrink: 0; }
+.btn-buy {
+  display: block; text-align: center; padding: 13px;
+  border-radius: 8px; font-weight: 800; font-size: 12px;
+  text-decoration: none; transition: transform .15s; margin-top: auto;
+  letter-spacing: .5px;
+}
+.btn-buy-primary { background: var(--yellow); color: #000; animation: pulse-glow 2.5s ease-in-out infinite; }
+.btn-buy-primary:hover { background: var(--yellow-light); transform: translateY(-2px); }
+.btn-buy-ghost { background: transparent; color: var(--text); border: 1px solid rgba(245,200,0,.2); }
+.btn-buy-ghost:hover { border-color: var(--yellow); color: var(--yellow); transform: translateY(-2px); }
+
+/* ── GUARANTEE ── */
+.guarantee { background: var(--black2); }
+.guarantee-box {
+  background: var(--black3); border: 1px solid rgba(245,200,0,.2);
+  border-radius: 16px; padding: 48px 40px;
+  display: flex; gap: 36px; align-items: center; margin-top: 48px;
+}
+.guarantee-icon { font-size: 64px; flex-shrink: 0; animation: float 4s ease-in-out infinite; }
+.guarantee-text h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px; letter-spacing: 1px; margin-bottom: 12px; color: var(--yellow);
+}
+.guarantee-text p { font-size: 15px; color: rgba(240,237,232,.72); line-height: 1.7; }
+
+/* ── FAQ ── */
+.faq { background: var(--black); }
+.faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 2px; border-radius: 12px; overflow: hidden; }
+.faq-item { background: var(--black3); }
+.faq-q {
+  width: 100%; background: none; border: none; color: var(--text);
+  font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+  text-align: left; padding: 20px 22px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  transition: background .2s; line-height: 1.4;
+}
+.faq-q:hover { background: var(--black4); }
+.faq-arrow { font-size: 20px; color: var(--yellow); transition: transform .3s; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .3s;
+  font-size: 13px; color: var(--muted); line-height: 1.7; padding: 0 22px;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 22px 20px; }
+
+/* ── DOUBT BANNER ── */
+.doubt-banner { background: var(--yellow); padding: 60px 20px; text-align: center; }
+.doubt-banner h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 4vw, 44px); letter-spacing: 1.5px;
+  color: #000; margin-bottom: 12px;
+}
+.doubt-banner p { font-size: 15px; color: rgba(0,0,0,.6); margin-bottom: 28px; max-width: 460px; margin-left: auto; margin-right: auto; }
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #000; color: #fff;
+  font-weight: 800; font-size: 14px;
+  padding: 15px 30px; border-radius: 8px;
+  text-decoration: none; transition: background .2s, transform .15s;
+}
+.btn-wa:hover { background: #1a1a1a; transform: translateY(-2px); }
+.btn-wa svg { width: 20px; height: 20px; fill: #25D366; }
+
+/* ── WA FLOAT ── */
+.wa-float {
+  position: fixed; bottom: 20px; right: 20px; z-index: 99;
+  background: #25D366; width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(37,211,102,.45);
+  animation: float 3s ease-in-out infinite;
+  transition: transform .2s;
+}
+.wa-float:hover { transform: scale(1.12); }
+.wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+/* ── FOOTER ── */
+footer { background: #000; border-top: 1px solid rgba(245,200,0,.1); padding: 36px 20px; text-align: center; }
+.logo-footer { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 4px; color: var(--yellow); margin-bottom: 10px; display: block; }
+footer p { font-size: 12px; color: var(--muted); line-height: 1.9; }
+
+/* ══════════════════════════════
+   MOBILE — max 768px
+══════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Hero: coluna única, imagem acima */
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .hero-visual {
+    min-height: auto;
+    padding: 48px 24px 20px;
+    order: -1;
+  }
+  .hero-product-img { max-width: 220px; }
+  .hero-content {
+    padding: 0 20px 60px;
+    text-align: center;
+  }
+  .hero h1 { font-size: clamp(44px, 12vw, 64px); }
+  .hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+  .hero-ctas { justify-content: center; flex-direction: column; align-items: center; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; text-align: center; }
+  .hero-trust { justify-content: center; }
+
+  /* Split: overlay cobre tudo verticalmente */
+  .split-section { min-height: 420px; }
+  .split-overlay,
+  .split-overlay-right {
+    background: linear-gradient(to top,
+      rgba(10,10,10,.98) 0%,
+      rgba(10,10,10,.88) 55%,
+      rgba(10,10,10,.55) 100%);
+  }
+  .split-content,
+  .split-content.right {
+    text-align: center;
+    padding: 48px 20px;
+  }
+  .split-content.right p { margin-left: auto; margin-right: auto; }
+  .split-content p { max-width: 100%; }
+  .split-content h2 { font-size: clamp(36px, 10vw, 56px); }
+
+  /* Problem: coluna única */
+  .problem-grid { grid-template-columns: 1fr; }
+
+  /* How: 1 coluna */
+  .how-cards { grid-template-columns: 1fr; }
+
+  /* Benefits: coluna única */
+  .benefits-layout { grid-template-columns: 1fr; gap: 32px; }
+  .benefits-visual { order: -1; }
+
+  /* Pricing: 1 coluna em mobile */
+  .pricing-grid { grid-template-columns: 1fr; gap: 20px; }
+  .price-img-wrap { min-height: 220px; padding: 28px 40px 16px; }
+  .price-img-wrap img { max-height: 200px; }
+  .price-value { font-size: 52px; }
+  .price-body { padding: 22px 22px 24px; gap: 16px; }
+  .price-card h3 { font-size: 22px; }
+  .price-feat { font-size: 13px; }
+  .price-installment { font-size: 13px; }
+  .price-installment strong { font-size: 16px; }
+  .price-bonus { font-size: 12px; }
+  .btn-buy { font-size: 15px; padding: 16px; }
+  .featured-badge { font-size: 10px; }
+
+  /* Guarantee: coluna */
+  .guarantee-box { flex-direction: column; text-align: center; padding: 36px 24px; gap: 24px; }
+
+  /* Section pads menores */
+  .section-pad { padding: 60px 0; }
+
+  /* Nav */
+  nav { padding: 12px 16px; }
+  .nav-logo { font-size: 20px; }
+}
+
+/* ── max 400px (pequenos) ── */
+@media (max-width: 400px) {
+  .hero h1 { font-size: 40px; }
+  .nav-logo { letter-spacing: 2px; }
+  .section-title { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">THERMO PRO</div>
+  <a href="#pricing" class="nav-cta">Garantir Agora</a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>Controle Glicêmico</span><span>Queima de Gordura</span><span>Reduz a Fome</span>
+    <span>Preserva o Músculo</span><span>Energia o Dia Todo</span><span>Registro ANVISA</span>
+    <span>Garantia de 7 Dias</span><span>Fórmula Exclusiva</span>
+    <span>Controle Glicêmico</span><span>Queima de Gordura</span><span>Reduz a Fome</span>
+    <span>Preserva o Músculo</span><span>Energia o Dia Todo</span><span>Registro ANVISA</span>
+    <span>Garantia de 7 Dias</span><span>Fórmula Exclusiva</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Suplemento Termogênico · Fórmula Exclusiva</div>
+    <h1>SEU CORPO<br>FINALMENTE<br><em>QUEIMANDO</em><br>GORDURA.</h1>
+    <p class="hero-sub">O Thermo Pro achata sua curva glicêmica, elimina o desejo por doces e acelera o metabolismo — sem tremores, sem taquicardia, sem sacrifício extremo.</p>
+    <div class="hero-ctas">
+      <a href="#pricing" class="btn-primary">Quero Emagrecer Agora →</a>
+      <a href="https://wa.me/message/UF5I5M4AHJEXJ1" target="_blank" class="btn-ghost">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tenho dúvidas
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><div class="trust-dot"></div> Registro ANVISA</div>
+      <div class="trust-item"><div class="trust-dot"></div> Compra 100% Segura</div>
+      <div class="trust-item"><div class="trust-dot"></div> Garantia de 7 Dias</div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img class="hero-product-img"
+      src="https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/1%20pote.png"
+      alt="Thermo Pro" />
+  </div>
+</section>
+
+<!-- SPLIT: HOMEM -->
+<div class="split-section">
+  <div class="split-bg" style="background-image:url('https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/abdomem%20homem.png');"></div>
+  <div class="split-overlay"></div>
+  <div class="split-content reveal">
+    <div class="split-tag">Para Ele</div>
+    <h2>ZERO GORDURA.<br><span>MÁXIMO</span><br>RESULTADO.</h2>
+    <p>O Thermo Pro acelera o metabolismo masculino, controla os picos de insulina que geram gordura abdominal e preserva cada grama de músculo conquistado.</p>
+    <a href="#pricing" class="btn-primary">Começar Agora →</a>
+  </div>
+</div>
+
+<!-- SPLIT: MULHER -->
+<div class="split-section" style="background:var(--black2);">
+  <div class="split-bg" style="background-image:url('https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/abdomem%20mulher.png'); background-position:right center;"></div>
+  <div class="split-overlay split-overlay-right"></div>
+  <div class="split-content right reveal">
+    <div class="split-tag">Para Ela</div>
+    <h2>BARRIGA<br>ENXUTA SEM<br><span>SACRIFÍCIO.</span></h2>
+    <p>Controle do apetite, redução da vontade por doces e metabolismo acelerado — sem efeitos colaterais agressivos ou dieta radical.</p>
+    <a href="#pricing" class="btn-primary">Começar Agora →</a>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem section-pad">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">O problema real</p>
+      <h2 class="section-title">VOCÊ NÃO FALHOU.<br>A ESTRATÉGIA É QUE<br>ESTAVA ERRADA.</h2>
+      <p class="section-sub">A maioria das pessoas ataca o sintoma e ignora o que realmente sabota os resultados.</p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-item"><div class="problem-icon">🍬</div><div><h3>Glicose descontrolada</h3><p>Picos de açúcar geram mais fome, mais vontade de doce — e mais gordura acumulada na barriga.</p></div></div>
+      <div class="problem-item"><div class="problem-icon">🐢</div><div><h3>Metabolismo lento</h3><p>Com o metabolismo freado, seu corpo prefere guardar energia. Você se esforça, a balança não move.</p></div></div>
+      <div class="problem-item"><div class="problem-icon">😩</div><div><h3>Fome fora de controle</h3><p>Dieta radical sem suporte leva à compulsão. Seu corpo briga contra você — e quase sempre vence.</p></div></div>
+      <div class="problem-item"><div class="problem-icon">💪</div><div><h3>Perda de músculo</h3><p>Emagrecer sem cuidado corrói a massa magra. Peso a menos, flacidez a mais.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how section-pad">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">A fórmula</p>
+      <h2 class="section-title">QUATRO COMPOSTOS.<br>UMA SINERGIA PODEROSA.</h2>
+      <p class="section-sub">O Thermo Pro age em múltiplas frentes ao mesmo tempo. A combinação é que faz a diferença.</p>
+    </div>
+    <div class="how-cards">
+      <div class="how-card reveal"><div class="how-number">01</div><p class="how-ing">Picolinato de Cromo</p><h3>Controla o Açúcar no Sangue</h3><p>Regula a glicose, reduz o apetite e elimina o desejo por doces. O gatilho da gordura abdominal, sob controle.</p></div>
+      <div class="how-card reveal"><div class="how-number">02</div><p class="how-ing">Inulina</p><h3>Sacia e Regula o Intestino</h3><p>Fibra solúvel prebiótica que prolonga a saciedade, melhora a digestão e otimiza a absorção de nutrientes.</p></div>
+      <div class="how-card reveal"><div class="how-number">03</div><p class="how-ing">Espirulina</p><h3>Energia Sem Ansiedade</h3><p>Superalimento rico em proteínas e antioxidantes. Aumenta a disposição sem estímulos agressivos.</p></div>
+      <div class="how-card reveal"><div class="how-number">04</div><p class="how-ing">Maltodextrina</p><h3>Absorção Rápida e Eficiente</h3><p>Garante que os compostos ativos sejam absorvidos rapidamente para o efeito começar logo após o consumo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits section-pad">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">O que você vai sentir</p>
+      <h2 class="section-title">RESULTADOS EM<br>MÚLTIPLAS FRENTES.</h2>
+    </div>
+    <div class="benefits-layout">
+      <div class="benefit-list reveal">
+        <div class="benefit-item"><div class="benefit-icon">📉</div><div><h4>Barriga Mais Enxuta</h4><p>Com a glicose controlada, seu corpo para de acumular gordura visceral.</p></div></div>
+        <div class="benefit-item"><div class="benefit-icon">🚫</div><div><h4>Menos Fome e Vontade de Doce</h4><p>Sem picos de insulina, o cérebro para de pedir açúcar. Sua dieta fica muito mais fácil.</p></div></div>
+        <div class="benefit-item"><div class="benefit-icon">⚡</div><div><h4>Mais Energia e Disposição</h4><p>Metabolismo acelerado mantém sua energia estável durante todo o dia.</p></div></div>
+        <div class="benefit-item"><div class="benefit-icon">💪</div><div><h4>Músculo Preservado</h4><p>Você perde gordura, não músculo. O Thermo Pro protege sua massa magra.</p></div></div>
+        <div class="benefit-item"><div class="benefit-icon">🫀</div><div><h4>Sem Efeitos Colaterais</h4><p>Nenhum tremor, nenhuma taquicardia. Energia limpa, resultado real.</p></div></div>
+      </div>
+      <div class="benefits-visual reveal">
+        <div class="big-stat">60</div>
+        <div class="big-stat-label">dias de uso contínuo<br>para resultados consistentes</div>
+        <div class="stat-divider"></div>
+        <div class="big-stat" style="font-size:50px">+1</div>
+        <div class="big-stat-label">pote de bônus grátis<br>em todos os pacotes</div>
+        <div class="stat-divider"></div>
+        <div class="big-stat" style="font-size:50px">7</div>
+        <div class="big-stat-label">dias de garantia<br>sem risco, sem burocracia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing section-pad" id="pricing">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <p class="section-label">Escolha seu pacote</p>
+      <h2 class="section-title">INVISTA NO SEU RESULTADO.</h2>
+      <p class="section-sub" style="margin:0 auto;">Quanto mais tempo de suplementação, mais consistente o resultado.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- 1 + 1 -->
+      <div class="price-card reveal">
+        <div class="price-img-wrap">
+          <img src="https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/1+1de%20bonus.png" alt="1 Pote + 1 de Bônus" />
+        </div>
+        <div class="price-body">
+          <div>
+            <p class="price-potes">1 Pote</p>
+            <h3>Thermo Pro + 1 de Bônus</h3>
+            <span class="price-bonus">🎁 1 Pote Grátis</span>
+          </div>
+          <div class="price-block">
+            <p class="price-installment">12x de <strong>R$ 25,55</strong></p>
+            <div class="price-value">R$247</div>
+            <p class="price-note">ou R$247,00 à vista · 2 potes</p>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">30 comprimidos por pote</div>
+            <div class="price-feat">1000mg por comprimido</div>
+            <div class="price-feat">Garantia de 7 dias</div>
+          </div>
+          <a href="https://ev.braip.com/ref?pl=planll2z&ck=che46god&af=afi07pl242" target="_blank" class="btn-buy btn-buy-ghost">Garantir Este Pacote</a>
+        </div>
+      </div>
+
+      <!-- 3 + 1 -->
+      <div class="price-card reveal">
+        <div class="price-img-wrap">
+          <img src="https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/3%20+%201%20de%20bonus.png" alt="3 Potes + 1 de Bônus" />
+        </div>
+        <div class="price-body">
+          <div>
+            <p class="price-potes">3 Potes</p>
+            <h3>Thermo Pro + 1 de Bônus</h3>
+            <span class="price-bonus">🎁 1 Pote Grátis</span>
+          </div>
+          <div class="price-block">
+            <p class="price-installment">12x de <strong>R$ 35,89</strong></p>
+            <div class="price-value">R$347</div>
+            <p class="price-note">ou R$347,00 à vista · 4 potes</p>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">30 comprimidos por pote</div>
+            <div class="price-feat">1000mg por comprimido</div>
+            <div class="price-feat">Garantia de 7 dias</div>
+          </div>
+          <a href="https://ev.braip.com/ref?pl=pla4nnpg&ck=che46god&af=afi07pl242" target="_blank" class="btn-buy btn-buy-ghost">Garantir Este Pacote</a>
+        </div>
+      </div>
+
+      <!-- 5 + 1 DESTAQUE -->
+      <div class="price-card featured reveal">
+        <div class="featured-badge">⭐ Mais Recomendado</div>
+        <div class="price-img-wrap featured-top">
+          <img src="https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/5%20+%201%20de%20bonus.png" alt="5 Potes + 1 de Bônus" />
+        </div>
+        <div class="price-body">
+          <div>
+            <p class="price-potes">5 Potes</p>
+            <h3>Thermo Pro + 1 de Bônus</h3>
+            <span class="price-bonus">🎁 1 Pote Grátis</span>
+          </div>
+          <div class="price-block">
+            <p class="price-installment">12x de <strong>R$ 46,23</strong></p>
+            <div class="price-value">R$447</div>
+            <p class="price-note">ou R$447,00 à vista · 6 potes</p>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">Cobre os 60 dias ideais</div>
+            <div class="price-feat">30 comprimidos por pote</div>
+            <div class="price-feat">1000mg por comprimido</div>
+            <div class="price-feat">Garantia de 7 dias</div>
+          </div>
+          <a href="https://ev.braip.com/ref?pl=playggzx&ck=che46god&af=afi07pl242" target="_blank" class="btn-buy btn-buy-primary">Quero Este Pacote →</a>
+        </div>
+      </div>
+
+      <!-- 12 POTES -->
+      <div class="price-card reveal">
+        <div class="price-img-wrap">
+          <img src="https://bnuyslurompyavjbdjnm.supabase.co/storage/v1/object/public/thermo_pro/12%20potes.png" alt="12 Potes Thermo Pro" />
+        </div>
+        <div class="price-body">
+          <div>
+            <p class="price-potes">12 Potes</p>
+            <h3>Thermo Pro Reserva Completa</h3>
+            <span class="price-bonus" style="background:rgba(245,200,0,.08);border-color:rgba(245,200,0,.3)">🔥 Melhor Custo-Benefício</span>
+          </div>
+          <div class="price-block">
+            <p class="price-installment">12x de <strong>R$ 77,26</strong></p>
+            <div class="price-value">R$747</div>
+            <p class="price-note">ou R$747,00 à vista · 12 potes</p>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">Tratamento de longo prazo</div>
+            <div class="price-feat">30 comprimidos por pote</div>
+            <div class="price-feat">1000mg por comprimido</div>
+            <div class="price-feat">Garantia de 7 dias</div>
+          </div>
+          <a href="https://ev.braip.com/ref?pl=plar661w&ck=che46god&af=afi07pl242" target="_blank" class="btn-buy btn-buy-ghost">Garantir Este Pacote</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee section-pad">
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <div class="guarantee-icon">🛡️</div>
+      <div class="guarantee-text">
+        <h3>GARANTIA INCONDICIONAL DE 7 DIAS</h3>
+        <p>Se em até 7 dias após receber o produto você não sentir nenhuma diferença na sua energia, no controle da fome ou na evolução do peso — devolvemos 100% do seu dinheiro. Sem burocracia, sem questionamento, sem risco. O único risco aqui é continuar do jeito que está.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOUBT BANNER -->
+<div class="doubt-banner reveal">
+  <h2>AINDA TEM ALGUMA DÚVIDA?</h2>
+  <p>Nossa equipe está no WhatsApp pronta para te ajudar antes de você decidir.</p>
+  <a href="https://wa.me/message/UF5I5M4AHJEXJ1" target="_blank" class="btn-wa">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar no WhatsApp
+  </a>
+</div>
+
+<!-- FAQ -->
+<section class="faq section-pad">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Dúvidas frequentes</p>
+      <h2 class="section-title">PERGUNTAS &<br>RESPOSTAS.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item"><button class="faq-q">Serve para homens e mulheres? <span class="faq-arrow">+</span></button><div class="faq-a">Sim! O Thermo Pro foi formulado para funcionar em ambos os metabolismos, independente do sexo.</div></div>
+      <div class="faq-item"><button class="faq-q">Preciso fazer dieta junto? <span class="faq-arrow">+</span></button><div class="faq-a">Não é obrigatório. Você pode ter resultados sem dieta radical. Mas combinar com uma alimentação saudável acelera muito os resultados.</div></div>
+      <div class="faq-item"><button class="faq-q">Tem efeitos colaterais como tremor ou taquicardia? <span class="faq-arrow">+</span></button><div class="faq-a">Não. A fórmula foi desenvolvida para fornecer energia limpa, sem picos de ansiedade, tremores ou palpitações.</div></div>
+      <div class="faq-item"><button class="faq-q">Por quanto tempo devo tomar? <span class="faq-arrow">+</span></button><div class="faq-a">Recomendamos no mínimo 60 dias de uso contínuo para resultados consistentes. Por isso os pacotes maiores são sempre mais vantajosos.</div></div>
+      <div class="faq-item"><button class="faq-q">R$247 é o valor de apenas 1 pote? <span class="faq-arrow">+</span></button><div class="faq-a">Exatamente. Você paga por 1 pote e já recebe o segundo de bônus, sem nenhum custo adicional.</div></div>
+      <div class="faq-item"><button class="faq-q">Posso parcelar? <span class="faq-arrow">+</span></button><div class="faq-a">Sim! Todos os pacotes podem ser parcelados em até 12x no cartão de crédito.</div></div>
+      <div class="faq-item"><button class="faq-q">O produto tem registro na ANVISA? <span class="faq-arrow">+</span></button><div class="faq-a">Sim. O Thermo Pro é registrado conforme as normas da ANVISA, garantindo segurança e qualidade.</div></div>
+      <div class="faq-item"><button class="faq-q">Como funciona a garantia? <span class="faq-arrow">+</span></button><div class="faq-a">Se em até 7 dias você não sentir diferença, devolvemos 100% do investimento. Sem burocracia e sem questionamentos.</div></div>
+      <div class="faq-item"><button class="faq-q">Como recebo o produto? <span class="faq-arrow">+</span></button><div class="faq-a">Após a confirmação do pagamento, as informações de entrega chegam no seu e-mail. Envio direto pela loja parceira.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo-footer">THERMO PRO</span>
+  <p>Produto registrado conforme normas da ANVISA.<br>Este site não substitui orientação médica ou nutricional.<br>© 2025 Thermo Pro. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/message/UF5I5M4AHJEXJ1" target="_blank" class="wa-float" title="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06 });
+reveals.forEach(el => io.observe(el));
+
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
