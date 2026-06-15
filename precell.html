@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-572RT23V');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 Hábitos que Descontrolam sua Glicose (e Travam o Emagrecimento) | Saúde & Bem-estar</title>
+<meta name="description" content="Pequenos hábitos do dia a dia podem desregular sua curva glicêmica e dificultar a perda de peso. Entenda o que está por trás disso e como ajustar sua rotina.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="favicon.ico">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '427968493656232');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=427968493656232&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow: #F5C800;
+  --yellow-light: #FFE033;
+  --black: #0A0A0A;
+  --black2: #111111;
+  --black3: #181818;
+  --black4: #202020;
+  --text: #F0EDE8;
+  --muted: #888880;
+  --border: rgba(245,200,0,0.1);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes flicker { 0%,100%{opacity:1} 48%{opacity:.9} 50%{opacity:.6} 52%{opacity:.9} }
+@keyframes rise { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse-glow { 0%,100%{box-shadow:0 0 24px rgba(245,200,0,.3)} 50%{box-shadow:0 0 52px rgba(245,200,0,.65)} }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(245,200,0,.12);
+  padding: 14px 20px;
+  display: flex; justify-content: center; align-items: center;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 4px; color: var(--yellow);
+  animation: flicker 5s infinite;
+  text-shadow: 0 0 18px rgba(245,200,0,.35);
+}
+
+/* ── ARTICLE HEADER ── */
+.article-header {
+  max-width: 720px; margin: 0 auto;
+  padding: 56px 20px 24px;
+}
+.section-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--yellow); margin-bottom: 14px;
+}
+.article-header h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(34px, 6vw, 54px);
+  line-height: 1.08; letter-spacing: 1px; margin-bottom: 20px;
+}
+.article-lead {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(240,237,232,.7);
+  line-height: 1.75; margin-bottom: 22px;
+}
+.article-meta {
+  font-size: 11px; color: var(--muted); font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.article-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+
+/* ── ARTICLE VISUAL (SVG) ── */
+.article-visual { max-width: 720px; margin: 8px auto 0; padding: 0 20px; }
+.glucose-chart { width: 100%; height: auto; display: block; }
+
+/* ── PROSE / ARTICLE BODY ── */
+.prose { max-width: 720px; margin: 0 auto; padding: 24px 20px 8px; }
+.prose h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(26px, 4vw, 36px);
+  letter-spacing: 1px; line-height: 1.15;
+  margin: 48px 0 18px;
+}
+.prose p {
+  font-size: 16px; color: rgba(240,237,232,.78);
+  line-height: 1.85; margin-bottom: 18px;
+}
+
+/* ── HABIT LIST ── */
+.habit-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 22px;
+  margin: 24px 0 8px;
+}
+.habit-item { display: flex; gap: 18px; align-items: flex-start; }
+.habit-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px; color: var(--yellow);
+  flex-shrink: 0; line-height: 1.2; min-width: 38px;
+}
+.habit-item h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.habit-item p { font-size: 15px; color: rgba(240,237,232,.7); line-height: 1.7; margin: 0; }
+
+/* ── TIP LIST ── */
+.tip-list { list-style: none; margin: 20px 0 8px; display: flex; flex-direction: column; gap: 14px; }
+.tip-list li {
+  position: relative; padding-left: 28px;
+  font-size: 15px; color: rgba(240,237,232,.78); line-height: 1.7;
+}
+.tip-list li::before {
+  content: ''; position: absolute; left: 0; top: 9px;
+  width: 8px; height: 8px; border-radius: 2px;
+  background: var(--yellow);
+}
+
+/* ── CALLOUT ── */
+.callout-box {
+  background: var(--black3);
+  border-left: 3px solid var(--yellow);
+  border-radius: 0 12px 12px 0;
+  padding: 22px 26px;
+  margin: 36px 0;
+}
+.callout-label {
+  display: block;
+  font-size: 11px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--yellow); margin-bottom: 8px;
+}
+.callout-box p { margin: 0; font-size: 15px; color: rgba(240,237,232,.85); line-height: 1.75; }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  background: var(--black2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 64px 20px;
+  text-align: center;
+  margin-top: 48px;
+}
+.cta-section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 4.5vw, 42px);
+  letter-spacing: 1px; max-width: 620px; margin: 0 auto 16px;
+}
+.cta-section p {
+  font-size: 15px; color: rgba(240,237,232,.65);
+  max-width: 520px; margin: 0 auto 28px; line-height: 1.7;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--yellow); color: #000;
+  font-weight: 800; font-size: 14px;
+  padding: 16px 36px; border-radius: 8px;
+  text-decoration: none; letter-spacing: .5px;
+  animation: pulse-glow 2.5s ease-in-out infinite;
+  transition: transform .15s, background .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); background: var(--yellow-light); }
+
+/* ── FOOTER ── */
+footer { background: #000; border-top: 1px solid rgba(245,200,0,.1); padding: 36px 20px 96px; text-align: center; }
+.logo-footer { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 4px; color: var(--yellow); margin-bottom: 10px; display: block; }
+footer p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; margin: 0 auto; }
+
+/* ── COOKIE BAR ── */
+.cookie-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: var(--black3);
+  border-top: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+  transform: translateY(100%);
+  transition: transform .4s ease;
+}
+.cookie-bar.visible { transform: translateY(0); }
+.cookie-bar p {
+  font-size: 13px; color: rgba(240,237,232,.75);
+  line-height: 1.6; margin: 0; max-width: 640px;
+}
+.cookie-btn {
+  background: var(--yellow); color: #000;
+  font-weight: 800; font-size: 13px;
+  padding: 10px 24px; border-radius: 6px;
+  border: none; cursor: pointer;
+  letter-spacing: .5px; white-space: nowrap;
+  transition: background .2s;
+}
+.cookie-btn:hover { background: var(--yellow-light); }
+
+/* ── MOBILE ── */
+@media (max-width: 480px) {
+  .article-header { padding: 40px 16px 20px; }
+  .prose { padding: 20px 16px 8px; }
+  .habit-num { font-size: 26px; min-width: 30px; }
+  .cookie-bar { flex-direction: column; text-align: center; gap: 12px; }
+  .cta-section { padding: 48px 16px; }
+}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-572RT23V"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">THERMO PRO</div>
+</nav>
+
+<!-- ARTICLE HEADER -->
+<header class="article-header reveal">
+  <p class="section-label">Saúde Metabólica</p>
+  <h1>5 Hábitos que Descontrolam sua Glicose — e Travam seu Emagrecimento</h1>
+  <p class="article-lead">Você reduziu as porções, cortou o refrigerante e mesmo assim a balança não sai do lugar? Para muita gente, o problema não está na quantidade de comida, mas em como o corpo reage a ela ao longo do dia. Entenda por que sua curva glicêmica pode ser a peça que está faltando.</p>
+  <div class="article-meta">
+    <span>Leitura de 6 min</span>
+    <span class="dot"></span>
+    <span>Saúde & Bem-estar</span>
+  </div>
+</header>
+
+<!-- ARTICLE VISUAL -->
+<div class="article-visual reveal">
+  <svg class="glucose-chart" viewBox="0 0 600 180" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="0" y1="140" x2="600" y2="140" style="stroke:rgba(245,200,0,.15);stroke-width:1"/>
+    <path d="M0,120 C40,40 80,30 120,100 C160,150 200,160 240,90 C280,30 320,20 360,100 C400,160 440,165 480,95 C520,30 560,20 600,80"
+          fill="none" style="stroke:var(--yellow);stroke-width:3" stroke-linecap="round"/>
+    <circle cx="120" cy="100" r="5" style="fill:var(--yellow)"/>
+    <circle cx="360" cy="100" r="5" style="fill:var(--yellow)"/>
+    <circle cx="480" cy="95" r="5" style="fill:var(--yellow)" opacity=".5"/>
+  </svg>
+</div>
+
+<!-- ARTICLE BODY -->
+<article class="prose">
+
+  <section class="reveal">
+    <h2>O que é a curva glicêmica e por que ela importa</h2>
+    <p>Toda vez que você come, o nível de glicose (açúcar) no sangue sobe. Em resposta, o corpo libera insulina, o hormônio responsável por direcionar essa energia para as células. Esse processo é normal e acontece várias vezes ao dia.</p>
+    <p>O problema começa quando essa curva fica instável — picos muito altos seguidos de quedas bruscas. Esse vai-e-vem constante está associado a mais fome pouco tempo depois de comer, queda de energia no meio da tarde e maior tendência do corpo a guardar gordura, principalmente na região abdominal.</p>
+    <p>Ou seja: não é só "quanto" você come, mas também "como" e "quando" — e isso explica por que duas pessoas com a mesma dieta podem ter resultados completamente diferentes.</p>
+  </section>
+
+  <section class="reveal">
+    <h2>5 hábitos do dia a dia que mais desregulam o açúcar no sangue</h2>
+    <ul class="habit-list">
+      <li class="habit-item">
+        <span class="habit-num">01</span>
+        <div>
+          <h3>Pular o café da manhã ou ficar muitas horas em jejum</h3>
+          <p>Passar longos períodos sem comer pode levar o corpo a reagir com mais intensidade na próxima refeição, gerando picos de glicose mais altos do que o normal.</p>
+        </div>
+      </li>
+      <li class="habit-item">
+        <span class="habit-num">02</span>
+        <div>
+          <h3>Consumir carboidratos refinados isolados</h3>
+          <p>Pão branco, biscoitos, doces e refrigerante — quando consumidos sozinhos, sem fibra ou proteína por perto — são absorvidos rapidamente e elevam o açúcar no sangue de forma abrupta.</p>
+        </div>
+      </li>
+      <li class="habit-item">
+        <span class="habit-num">03</span>
+        <div>
+          <h3>Dormir poucas horas ou em horários irregulares</h3>
+          <p>A privação de sono interfere na forma como o corpo processa a glicose, podendo aumentar a resistência à insulina já no dia seguinte.</p>
+        </div>
+      </li>
+      <li class="habit-item">
+        <span class="habit-num">04</span>
+        <div>
+          <h3>Ficar sentado por longos períodos após as refeições</h3>
+          <p>A inatividade logo depois de comer reduz a velocidade com que a glicose é retirada da corrente sanguínea pelos músculos.</p>
+        </div>
+      </li>
+      <li class="habit-item">
+        <span class="habit-num">05</span>
+        <div>
+          <h3>Estresse crônico</h3>
+          <p>Períodos de estresse prolongado elevam o cortisol, hormônio que pode aumentar os níveis de açúcar no sangue mesmo sem qualquer alimento envolvido.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <div class="callout-box reveal">
+    <span class="callout-label">Você sabia?</span>
+    <p>Pequenas oscilações de glicose ao longo do dia podem estar relacionadas ao aumento da sensação de fome e à queda de energia e foco — mesmo quando a alimentação parece "normal" em termos de calorias.</p>
+  </div>
+
+  <section class="reveal">
+    <h2>Mudanças simples que ajudam a estabilizar a glicose</h2>
+    <p>A boa notícia é que pequenos ajustes na rotina podem fazer uma diferença real na forma como o corpo lida com o açúcar. Alguns exemplos:</p>
+    <ul class="tip-list">
+      <li>Comer fibras e proteínas antes dos carboidratos na refeição — essa ordem ajuda a suavizar a curva de glicose.</li>
+      <li>Caminhar de 5 a 10 minutos após as principais refeições.</li>
+      <li>Priorizar um sono regular, com horários consistentes para dormir e acordar.</li>
+      <li>Manter-se hidratado ao longo do dia.</li>
+    </ul>
+    <p>Nenhuma dessas mudanças exige radicalismo — o segredo está na consistência.</p>
+  </section>
+
+  <section class="reveal">
+    <h2>O papel de alguns nutrientes no apoio ao metabolismo</h2>
+    <p>Além dos hábitos, alguns nutrientes têm sido estudados por seu possível papel de apoio ao metabolismo da glicose e à sensação de saciedade. O picolinato de cromo, por exemplo, é associado por estudos nutricionais ao metabolismo de carboidratos. Fibras prebióticas, como a inulina, contribuem para a saciedade e para a saúde digestiva. Já compostos antioxidantes, como os encontrados na espirulina, são associados ao suporte energético do organismo.</p>
+    <p>Vale reforçar: nenhum nutriente substitui hábitos saudáveis — eles funcionam como apoio complementar, dentro de uma rotina equilibrada.</p>
+    <p>Ajustar hábitos é o primeiro passo — e costuma trazer o resultado mais consistente a longo prazo. Para quem já fez esses ajustes e busca um apoio extra, existem hoje suplementos formulados para reunir alguns desses compostos em uma única fórmula, como é o caso do Thermo Pro.</p>
+  </section>
+
+</article>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>Quer Conhecer uma Fórmula Pensada para Apoiar o Controle Glicêmico?</h2>
+  <p>O Thermo Pro reúne picolinato de cromo, inulina e espirulina em uma fórmula desenvolvida para apoiar seu metabolismo no dia a dia.</p>
+  <a href="index.html" target="_self" class="btn-primary">Conhecer o Thermo Pro →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo-footer">THERMO PRO</span>
+  <p>Este conteúdo tem caráter informativo e educacional e não substitui orientação médica, nutricional ou de qualquer profissional de saúde qualificado. Consulte um especialista antes de iniciar qualquer suplementação.<br>© 2026 Thermo Pro. Todos os direitos reservados.</p>
+</footer>
+
+<!-- COOKIE CONSENT -->
+<div class="cookie-bar" id="cookieBar">
+  <p>Usamos cookies para melhorar sua experiência de navegação e analisar o desempenho deste conteúdo. Ao continuar, você concorda com o uso de cookies.</p>
+  <button class="cookie-btn" id="cookieAccept">Aceitar</button>
+</div>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06 });
+reveals.forEach(el => io.observe(el));
+
+(function() {
+  const COOKIE_KEY = 'thermopro_cookie_consent';
+  const bar = document.getElementById('cookieBar');
+  if (!localStorage.getItem(COOKIE_KEY)) {
+    bar.classList.add('visible');
+  }
+  document.getElementById('cookieAccept').addEventListener('click', () => {
+    localStorage.setItem(COOKIE_KEY, 'accepted');
+    bar.classList.remove('visible');
+  });
+})();
+</script>
+</body>
+</html>
